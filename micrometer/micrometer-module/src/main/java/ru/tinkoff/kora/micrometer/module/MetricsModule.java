@@ -137,14 +137,4 @@ public interface MetricsModule {
     default MicrometerCaffeineCacheMetricCollector caffeineCacheMetricsCollector(MeterRegistry meterRegistry) {
         return new MicrometerCaffeineCacheMetricCollector(meterRegistry);
     }
-
-    @DefaultComponent
-    default MicrometerZeebeWorkerMetricsFactory micrometerZeebeWorkerMetricsFactory(MeterRegistry meterRegistry) {
-        return new MicrometerZeebeWorkerMetricsFactory(meterRegistry);
-    }
-
-    @DefaultComponent
-    default MicrometerZeebeClientWorkerMetricsFactory micrometerZeebeClientWorkerMetricsFactory(MeterRegistry meterRegistry) {
-        return new MicrometerZeebeClientWorkerMetricsFactory(meterRegistry);
-    }
 }
