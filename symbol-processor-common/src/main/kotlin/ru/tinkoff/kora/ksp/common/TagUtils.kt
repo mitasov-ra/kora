@@ -28,6 +28,13 @@ object TagUtils {
         return this.addAnnotation(tag.toTagAnnotation())
     }
 
+    fun ParameterSpec.Builder.addTag(tag: Collection<TypeName>): ParameterSpec.Builder {
+        if (tag.isEmpty()) {
+            return this
+        }
+        return this.addAnnotation(tag.toTagSpecTypes())
+    }
+
     fun TypeSpec.Builder.addTag(tag: Set<String>): TypeSpec.Builder {
         if (tag.isEmpty()) {
             return this
@@ -80,6 +87,18 @@ object TagUtils {
             }
         }
         return setOf()
+    }
+
+    fun Collection<TypeName>.toTagSpecTypes(): AnnotationSpec {
+        val codeBlock = CodeBlock.builder().add("value = [")
+        forEachIndexed { i, type ->
+            if (i > 0) {
+                codeBlock.add(", ")
+            }
+            codeBlock.add("%T::class", type)
+        }
+        val value = codeBlock.add("]").build()
+        return AnnotationSpec.builder(CommonClassNames.tag).addMember(value).build()
     }
 
     fun Collection<String>.toTagAnnotation(): AnnotationSpec {
